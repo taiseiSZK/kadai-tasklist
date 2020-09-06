@@ -1,13 +1,13 @@
 class TasksController < ApplicationController
   
   before_action :require_user_logged_in
-  before_action :correct_user, only: [:destroy]
+  before_action :correct_user, only: [:edit, :update, :destroy]
   
   def index
-    if logged_in?
+    # if logged_in?
       # @task = current_user.tasks.build  # form_with 用
       @tasks = current_user.tasks.page(params[:page])
-    end
+    # end
   end
   
   def show
@@ -35,7 +35,7 @@ class TasksController < ApplicationController
     else
       @tasks = current_user.tasks.order(id: :desc).page(params[:page])
       flash.now[:danger] = 'タスクは登録されませんでした'
-      render new
+      render :new
     end
   end
   
